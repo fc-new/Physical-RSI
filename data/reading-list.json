@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "updated": "2026-09-29",
+  "categories": [
+    {
+      "id": "foundations",
+      "title": "Foundations of embodied intelligence",
+      "description": "These works establish the idea that a general-purpose model can connect language and perception to actions executed by a real or simulated embodiment.",
+      "entries": [
+        {
+          "key": "octo",
+          "title": "Octo: An Open-Source Generalist Robot Policy",
+          "authors": "Team Octo",
+          "year": 2024,
+          "url": "https://arxiv.org/abs/2405.12213",
+          "tags": ["reasoning", "interaction", "learning"],
+          "note": "A generalist policy trained across diverse robot datasets and designed for lightweight adaptation."
+        },
+        {
+          "key": "openvla",
+          "title": "OpenVLA: An Open-Source Vision-Language-Action Model",
+          "authors": "Kim et al.",
+          "year": 2024,
+          "url": "https://arxiv.org/abs/2406.09246",
+          "tags": ["reasoning", "sensing", "interaction"],
+          "note": "An openly released VLA that makes large-scale robot-policy research easier to reproduce."
+        },
+        {
+          "key": "palm-e",
+          "title": "PaLM-E: An Embodied Multimodal Language Model",
+          "authors": "Driess et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2303.03378",
+          "tags": ["reasoning", "sensing"],
+          "note": "Connects continuous sensor observations and language reasoning in one embodied model."
+        },
+        {
+          "key": "rt-2",
+          "title": "RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control",
+          "authors": "Brohan et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2307.15818",
+          "tags": ["reasoning", "sensing", "interaction"],
+          "note": "A landmark demonstration of transferring web-scale visual-language knowledge into robot actions."
+        },
+        {
+          "key": "rt-1",
+          "title": "RT-1: Robotics Transformer for Real-World Control at Scale",
+          "authors": "Brohan et al.",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2212.06817",
+          "tags": ["sensing", "interaction", "learning"],
+          "note": "Shows how a transformer policy can learn many real-world manipulation tasks from data."
+        }
+      ]
+    },
+    {
+      "id": "control",
+      "title": "Learning policies and control",
+      "description": "This section covers the mechanisms that turn demonstrations, rewards, or imagined trajectories into reliable low-level behavior.",
+      "entries": [
+        {
+          "key": "td-mpc2",
+          "title": "TD-MPC2: Scalable, Robust World Models for Continuous Control",
+          "authors": "Hansen et al.",
+          "year": 2024,
+          "url": "https://arxiv.org/abs/2310.16828",
+          "tags": ["interaction", "learning", "world-models"],
+          "note": "Demonstrates a compact model-predictive approach across many continuous-control tasks."
+        },
+        {
+          "key": "diffusion-policy",
+          "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+          "authors": "Chi et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2303.04137",
+          "tags": ["interaction", "learning"],
+          "note": "Uses diffusion to model multimodal action distributions for visuomotor control."
+        },
+        {
+          "key": "mobile-aloha",
+          "title": "Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware",
+          "authors": "Zhao et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2304.13705",
+          "tags": ["interaction", "learning"],
+          "note": "Mobile ALOHA shows how whole-body demonstrations can make long-horizon bimanual skills accessible."
+        },
+        {
+          "key": "dreamerv3",
+          "title": "Mastering Diverse Domains through World Models",
+          "authors": "Hafner et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2301.04104",
+          "tags": ["interaction", "learning", "world-models"],
+          "note": "DreamerV3 is a useful reference point for model-based control with a compact latent state."
+        },
+        {
+          "key": "mimicgen",
+          "title": "MimicGen: A Data Generation System for Scalable Robot Learning using Human Demonstrations",
+          "authors": "Mandlekar et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2310.17596",
+          "tags": ["interaction", "learning", "datasets"],
+          "note": "Generates scalable imitation-learning data by composing human demonstrations in simulation."
+        }
+      ]
+    },
+    {
+      "id": "planning",
+      "title": "Language, planning, and tool use",
+      "description": "These papers ask how an agent turns a human goal into a sequence of grounded skills, tool calls, or recoverable actions.",
+      "entries": [
+        {
+          "key": "code-as-policies",
+          "title": "Code as Policies: Language Model Programs for Embodied Control",
+          "authors": "Liang et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2209.07753",
+          "tags": ["reasoning", "interaction", "planning"],
+          "note": "Treats code generation as a bridge between natural-language goals and existing robot APIs."
+        },
+        {
+          "key": "inner-monologue",
+          "title": "Inner Monologue: Embodied Reasoning through Planning with Language Models",
+          "authors": "Huang et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2207.05608",
+          "tags": ["reasoning", "interaction", "planning"],
+          "note": "Feeds execution feedback back into language-model planning instead of assuming an open-loop plan."
+        },
+        {
+          "key": "voxposer",
+          "title": "VoxPoser: Composable 3D Value Maps for Robotic Manipulation with Language Models",
+          "authors": "Huang et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2307.05973",
+          "tags": ["reasoning", "sensing", "interaction", "planning"],
+          "note": "Grounds language-generated programs in 3D value maps that a controller can execute."
+        },
+        {
+          "key": "saycan",
+          "title": "Do As I Can, Not As I Say: Grounding Language in Robotic Affordances",
+          "authors": "Ahn et al.",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2204.01691",
+          "tags": ["reasoning", "sensing", "planning"],
+          "note": "SayCan separates what is useful for a task from what is physically feasible."
+        }
+      ]
+    },
+    {
+      "id": "perception",
+      "title": "Perception and world models",
+      "description": "An embodied agent needs a state estimate that is useful for action, not only a visually plausible description. This section follows the representations that make that estimate possible.",
+      "entries": [
+        {
+          "key": "foundationpose",
+          "title": "FoundationPose: Unified 6D Pose Estimation and Tracking of Novel Objects",
+          "authors": "Wen et al.",
+          "year": 2024,
+          "url": "https://arxiv.org/abs/2312.08344",
+          "tags": ["sensing", "perception"],
+          "note": "Provides a foundation-model style approach to pose estimation for previously unseen objects."
+        },
+        {
+          "key": "gaussian-splatting",
+          "title": "3D Gaussian Splatting for Real-Time Radiance Field Rendering",
+          "authors": "Kerbl et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2308.04079",
+          "tags": ["sensing", "world-models"],
+          "note": "Makes high-quality, view-consistent scene representations practical for interactive systems."
+        },
+        {
+          "key": "segment-anything",
+          "title": "Segment Anything",
+          "authors": "Kirillov et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2304.02643",
+          "tags": ["sensing", "perception"],
+          "note": "A general segmentation model that has become a practical building block for robot scene understanding."
+        },
+        {
+          "key": "nerf",
+          "title": "NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis",
+          "authors": "Mildenhall et al.",
+          "year": 2020,
+          "url": "https://arxiv.org/abs/2003.08934",
+          "tags": ["sensing", "world-models"],
+          "note": "The foundational neural scene representation behind much subsequent 3D reconstruction work."
+        }
+      ]
+    },
+    {
+      "id": "simulation",
+      "title": "Simulation and environments",
+      "description": "Simulation is useful when it exposes assumptions, supports repeatable rollouts, and makes failure measurable. These environments provide the testing ground for that process.",
+      "entries": [
+        {
+          "key": "robocasa",
+          "title": "RoboCasa: Large-Scale Simulation of Everyday Tasks for Generalist Robots",
+          "authors": "Nasiriany et al.",
+          "year": 2024,
+          "url": "https://arxiv.org/abs/2406.02523",
+          "tags": ["interaction", "simulation", "evaluation"],
+          "note": "Brings household-scale task diversity to robot-learning simulation."
+        },
+        {
+          "key": "habitat3",
+          "title": "Habitat 3.0: A Co-Habitat for Humans, Avatars and Robots",
+          "authors": "Puig et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2310.13724",
+          "tags": ["sensing", "interaction", "simulation"],
+          "note": "Supports embodied navigation and social interaction in shared environments."
+        },
+        {
+          "key": "maniskill2",
+          "title": "ManiSkill2: A Unified Benchmark for Generalizable Manipulation Skills",
+          "authors": "Gu et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2302.04659",
+          "tags": ["interaction", "simulation", "evaluation"],
+          "note": "A broad manipulation suite with emphasis on visual generalization and physical variation."
+        },
+        {
+          "key": "igibson2",
+          "title": "iGibson 2.0: Object-Centric Simulation for Robot Learning of Everyday Household Tasks",
+          "authors": "Shen et al.",
+          "year": 2021,
+          "url": "https://arxiv.org/abs/2108.03272",
+          "tags": ["sensing", "interaction", "simulation"],
+          "note": "Connects physically grounded household simulation with large-scale scene assets."
+        }
+      ]
+    },
+    {
+      "id": "datasets",
+      "title": "Datasets and benchmarks",
+      "description": "Data and evaluation protocols determine what a system can learn and what a reported number means. The entries here are useful anchors for comparing embodiments, tasks, and generalization claims.",
+      "entries": [
+        {
+          "key": "droid",
+          "title": "DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset",
+          "authors": "Khazatsky et al.",
+          "year": 2024,
+          "url": "https://arxiv.org/abs/2403.12945",
+          "tags": ["sensing", "interaction", "datasets"],
+          "note": "A diverse real-world dataset designed to capture the variation that laboratory demonstrations often miss."
+        },
+        {
+          "key": "libero",
+          "title": "LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning",
+          "authors": "Liu et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2306.03310",
+          "tags": ["interaction", "datasets", "evaluation"],
+          "note": "Tests whether a policy can retain and transfer knowledge across task sequences."
+        },
+        {
+          "key": "open-x-embodiment",
+          "title": "Open X-Embodiment: Robotic Learning Datasets and RT-X Models",
+          "authors": "Open X-Embodiment Collaboration",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2310.08864",
+          "tags": ["reasoning", "sensing", "interaction", "datasets"],
+          "note": "Unifies data from many robots and tasks to study cross-embodiment learning."
+        },
+        {
+          "key": "calvin",
+          "title": "CALVIN: A Benchmark for Language-Conditioned Policy Learning for Long-Horizon Robot Manipulation Tasks",
+          "authors": "Mees et al.",
+          "year": 2022,
+          "url": "https://arxiv.org/abs/2112.03227",
+          "tags": ["reasoning", "interaction", "datasets", "evaluation"],
+          "note": "Measures language-conditioned, long-horizon manipulation with compositional task chains."
+        },
+        {
+          "key": "meta-world",
+          "title": "Meta-World: A Benchmark and Evaluation for Multi-Task and Meta Reinforcement Learning",
+          "authors": "Yu et al.",
+          "year": 2020,
+          "url": "https://arxiv.org/abs/1910.10897",
+          "tags": ["interaction", "datasets", "evaluation"],
+          "note": "A standard suite for multi-task and meta-learning in simulated manipulation."
+        },
+        {
+          "key": "rlbench",
+          "title": "RLBench: The Robot Learning Benchmark & Learning Environment",
+          "authors": "James et al.",
+          "year": 2019,
+          "url": "https://arxiv.org/abs/1909.12271",
+          "tags": ["interaction", "simulation", "datasets", "evaluation"],
+          "note": "Provides a large set of language-described manipulation tasks in a common simulator."
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "title": "Safety, evaluation, and deployment",
+      "description": "Physical systems fail in ways that a single success rate cannot describe. These resources foreground constraints, risk, robustness, and the difference between a demonstration and a deployable system.",
+      "entries": [
+        {
+          "key": "safety-gymnasium",
+          "title": "Safety-Gymnasium: A Unified Safe Reinforcement Learning Benchmark",
+          "authors": "Ji et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2310.12567",
+          "tags": ["interaction", "safety", "evaluation"],
+          "note": "A maintained benchmark for measuring reward and constraint satisfaction together."
+        },
+        {
+          "key": "real-robot-learning-benchmark",
+          "title": "Train Offline, Test Online: A Real Robot Learning Benchmark",
+          "authors": "Singh et al.",
+          "year": 2023,
+          "url": "https://arxiv.org/abs/2306.00942",
+          "tags": ["interaction", "evaluation"],
+          "note": "Separates offline training from online evaluation on a real robot, making deployment gaps explicit."
+        },
+        {
+          "key": "openai-safety-gym",
+          "title": "OpenAI Safety Gym",
+          "authors": "Ray et al.",
+          "year": 2019,
+          "url": "https://github.com/openai/safety-gym",
+          "tags": ["interaction", "safety", "evaluation"],
+          "note": "Established a common language for constrained reinforcement-learning experiments."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+title: "Physical-RSI: A Living Map of Reasoning, Sensing, and Interaction in the Physical World"
+message: "If you use this index, please cite the repository and the individual works that inform your analysis."
+type: dataset
+authors:
+  - name: "SAIL Research Lab"
+version: "0.1.0"
+date-released: "2026-09-29"
+repository-code: "https://github.com/SAIL-Research-Lab/Physical-RSI"
+license: MIT
+keywords:
+  - embodied intelligence
+  - robot learning
+  - physical agents
+  - research survey
