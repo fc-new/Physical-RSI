@@ -1,158 +1,206 @@
-# Physical-RSI
+<h1 align="center"><em>Physical RSI</em>: Physical Recursive Self-Improvement</h1>
 
-<h1 align="center" style="font-size: 30px;"><strong><em>Physical-RSI</em></strong>: A Living Map of Reasoning, Sensing, and Interaction in the Physical World</h1>
+Physical RSI asks a narrower question than whether robots can keep learning: **can evidence from
+physical interaction improve the process that produces the robot's next improvement?**
 
-<p align="center">
-  <a href="https://github.com/SAIL-Research-Lab/Physical-RSI/actions/workflows/check.yml"><img src="https://github.com/SAIL-Research-Lab/Physical-RSI/actions/workflows/check.yml/badge.svg" alt="checks"></a>
-  <a href="https://github.com/SAIL-Research-Lab/Physical-RSI/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green.svg" alt="license"></a>
-  <a href="https://github.com/SAIL-Research-Lab/Physical-RSI/blob/main/data/reading-list.json"><img src="https://img.shields.io/badge/index-JSON-blue.svg" alt="reading list"></a>
-</p>
+A robot may collect more data, recover from a failed grasp, or fine-tune a policy after deployment.
+All of these are useful, but none is recursive by itself. Recursive self-improvement begins when a
+change reaches the mechanism that generates, evaluates, or selects later updates, and that change is
+retained for another improvement cycle. It is *physical* only when real interaction has a causal role
+in deciding what mechanism changes or survives. Running an otherwise fixed loop on a robot is not
+enough.
 
-Physical-RSI is a community-maintained map of research on intelligent systems that perceive,
-reason about, and act in the physical world. It brings together papers, datasets, simulators,
-and open-source systems that are often discussed separately. The goal is not to rank methods or
-to predict a single winning architecture. The goal is to make the connections between them easier
-to see and easier to check.
-
-The name is a working shorthand for **R**easoning, **S**ensing, and **I**nteraction. It is a
-navigation aid for this repository, not a claim that the field has settled on one definition.
-
-> **Status:** working index, first organized edition. The list is intentionally selective and
-> will change as the community contributes corrections and better references. This seed list
-> emphasizes foundational work through 2024; newer work is welcome.
-
-## The physical loop
-
-Physical systems have to close a loop: a plan is grounded in observations, an action changes the
-world, and the result becomes evidence for the next decision. We use that loop to organize the
-reading list.
-
-```mermaid
-flowchart LR
-    R["Reasoning<br/>plans, goals, language"] --> S["Sensing<br/>vision, geometry, state"]
-    S --> I["Interaction<br/>control, manipulation, navigation"]
-    I --> E["Evidence<br/>rollouts, feedback, safety"]
-    E --> R
-```
+This repository is a compact research map based on the **Physical Recursive Self-Improvement**
+paper. It follows the paper's evidence boundaries rather than treating every system described as
+"self-improving" as equivalent. The list is selective and will evolve with the literature.
 
 ## Contents
 
-- [Foundations of embodied intelligence](#foundations-of-embodied-intelligence)
-- [Learning policies and control](#learning-policies-and-control)
-- [Language, planning, and tool use](#language-planning-and-tool-use)
-- [Perception and world models](#perception-and-world-models)
-- [Simulation and environments](#simulation-and-environments)
-- [Datasets and benchmarks](#datasets-and-benchmarks)
-- [Safety, evaluation, and deployment](#safety-evaluation-and-deployment)
-- [How to contribute](#how-to-contribute)
-- [Citation](#citation)
+- [What counts as Physical RSI?](#what-counts-as-physical-rsi)
+- [Capability map: L1-L5](#capability-map-l1-l5)
+- [Agent participation](#agent-participation)
+- [Training](#training)
+- [Verification](#verification)
+- [Open problems](#open-problems)
+- [Contributing](#contributing)
 
-The sections below are generated from [`data/reading-list.json`](data/reading-list.json). Each
-entry has a stable key, a primary link, its publication year, and a short note explaining why it
-belongs in the map. Run `make render` after editing the data file.
+## What counts as Physical RSI?
 
-The maintenance scripts use Python 3.9 or newer and have no third-party dependencies.
+The relevant "self" is the whole embodied improvement system: robot policy, safety guard,
+verifier, memory, data pipeline, training procedure, and the infrastructure that decides which
+changes persist.
 
-<!-- BEGIN GENERATED READING LIST -->
-## Foundations of embodied intelligence
+Four claims that are often collapsed should be kept separate:
 
-These works establish the idea that a general-purpose model can connect language and perception to actions executed by a real or simulated embodiment.
+| Claim | Evidence required |
+| --- | --- |
+| **Inheritance** | A change from one cycle is retained and used later. |
+| **Persistent improvement** | The retained change contributes to better later performance. |
+| **Structural recursion** | The retained change modifies the process that produces later updates. |
+| **Beneficial recursion** | Under matched conditions, the revised process produces better successors than the process it replaced. |
 
-- [Octo: An Open-Source Generalist Robot Policy](https://arxiv.org/abs/2405.12213) -- Team Octo, 2024. Tags: reasoning, interaction, learning. A generalist policy trained across diverse robot datasets and designed for lightweight adaptation.
-- [OpenVLA: An Open-Source Vision-Language-Action Model](https://arxiv.org/abs/2406.09246) -- Kim et al., 2024. Tags: reasoning, sensing, interaction. An openly released VLA that makes large-scale robot-policy research easier to reproduce.
-- [PaLM-E: An Embodied Multimodal Language Model](https://arxiv.org/abs/2303.03378) -- Driess et al., 2023. Tags: reasoning, sensing. Connects continuous sensor observations and language reasoning in one embodied model.
-- [RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control](https://arxiv.org/abs/2307.15818) -- Brohan et al., 2023. Tags: reasoning, sensing, interaction. A landmark demonstration of transferring web-scale visual-language knowledge into robot actions.
-- [RT-1: Robotics Transformer for Real-World Control at Scale](https://arxiv.org/abs/2212.06817) -- Brohan et al., 2022. Tags: sensing, interaction, learning. Shows how a transformer policy can learn many real-world manipulation tasks from data.
+Structural recursion establishes the recursive form. Beneficial recursion establishes that the
+recursive change actually helped. The latter requires testing the **improver**, not merely showing
+that its latest policy is better.
 
-## Learning policies and control
-
-This section covers the mechanisms that turn demonstrations, rewards, or imagined trajectories into reliable low-level behavior.
-
-- [TD-MPC2: Scalable, Robust World Models for Continuous Control](https://arxiv.org/abs/2310.16828) -- Hansen et al., 2024. Tags: interaction, learning, world-models. Demonstrates a compact model-predictive approach across many continuous-control tasks.
-- [Diffusion Policy: Visuomotor Policy Learning via Action Diffusion](https://arxiv.org/abs/2303.04137) -- Chi et al., 2023. Tags: interaction, learning. Uses diffusion to model multimodal action distributions for visuomotor control.
-- [Learning Fine-Grained Bimanual Manipulation with Low-Cost Hardware](https://arxiv.org/abs/2304.13705) -- Zhao et al., 2023. Tags: interaction, learning. Mobile ALOHA shows how whole-body demonstrations can make long-horizon bimanual skills accessible.
-- [Mastering Diverse Domains through World Models](https://arxiv.org/abs/2301.04104) -- Hafner et al., 2023. Tags: interaction, learning, world-models. DreamerV3 is a useful reference point for model-based control with a compact latent state.
-- [MimicGen: A Data Generation System for Scalable Robot Learning using Human Demonstrations](https://arxiv.org/abs/2310.17596) -- Mandlekar et al., 2023. Tags: interaction, learning, datasets. Generates scalable imitation-learning data by composing human demonstrations in simulation.
-
-## Language, planning, and tool use
-
-These papers ask how an agent turns a human goal into a sequence of grounded skills, tool calls, or recoverable actions.
-
-- [Code as Policies: Language Model Programs for Embodied Control](https://arxiv.org/abs/2209.07753) -- Liang et al., 2023. Tags: reasoning, interaction, planning. Treats code generation as a bridge between natural-language goals and existing robot APIs.
-- [Inner Monologue: Embodied Reasoning through Planning with Language Models](https://arxiv.org/abs/2207.05608) -- Huang et al., 2023. Tags: reasoning, interaction, planning. Feeds execution feedback back into language-model planning instead of assuming an open-loop plan.
-- [VoxPoser: Composable 3D Value Maps for Robotic Manipulation with Language Models](https://arxiv.org/abs/2307.05973) -- Huang et al., 2023. Tags: reasoning, sensing, interaction, planning. Grounds language-generated programs in 3D value maps that a controller can execute.
-- [Do As I Can, Not As I Say: Grounding Language in Robotic Affordances](https://arxiv.org/abs/2204.01691) -- Ahn et al., 2022. Tags: reasoning, sensing, planning. SayCan separates what is useful for a task from what is physically feasible.
-
-## Perception and world models
-
-An embodied agent needs a state estimate that is useful for action, not only a visually plausible description. This section follows the representations that make that estimate possible.
-
-- [FoundationPose: Unified 6D Pose Estimation and Tracking of Novel Objects](https://arxiv.org/abs/2312.08344) -- Wen et al., 2024. Tags: sensing, perception. Provides a foundation-model style approach to pose estimation for previously unseen objects.
-- [3D Gaussian Splatting for Real-Time Radiance Field Rendering](https://arxiv.org/abs/2308.04079) -- Kerbl et al., 2023. Tags: sensing, world-models. Makes high-quality, view-consistent scene representations practical for interactive systems.
-- [Segment Anything](https://arxiv.org/abs/2304.02643) -- Kirillov et al., 2023. Tags: sensing, perception. A general segmentation model that has become a practical building block for robot scene understanding.
-- [NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis](https://arxiv.org/abs/2003.08934) -- Mildenhall et al., 2020. Tags: sensing, world-models. The foundational neural scene representation behind much subsequent 3D reconstruction work.
-
-## Simulation and environments
-
-Simulation is useful when it exposes assumptions, supports repeatable rollouts, and makes failure measurable. These environments provide the testing ground for that process.
-
-- [RoboCasa: Large-Scale Simulation of Everyday Tasks for Generalist Robots](https://arxiv.org/abs/2406.02523) -- Nasiriany et al., 2024. Tags: interaction, simulation, evaluation. Brings household-scale task diversity to robot-learning simulation.
-- [Habitat 3.0: A Co-Habitat for Humans, Avatars and Robots](https://arxiv.org/abs/2310.13724) -- Puig et al., 2023. Tags: sensing, interaction, simulation. Supports embodied navigation and social interaction in shared environments.
-- [ManiSkill2: A Unified Benchmark for Generalizable Manipulation Skills](https://arxiv.org/abs/2302.04659) -- Gu et al., 2023. Tags: interaction, simulation, evaluation. A broad manipulation suite with emphasis on visual generalization and physical variation.
-- [iGibson 2.0: Object-Centric Simulation for Robot Learning of Everyday Household Tasks](https://arxiv.org/abs/2108.03272) -- Shen et al., 2021. Tags: sensing, interaction, simulation. Connects physically grounded household simulation with large-scale scene assets.
-
-## Datasets and benchmarks
-
-Data and evaluation protocols determine what a system can learn and what a reported number means. The entries here are useful anchors for comparing embodiments, tasks, and generalization claims.
-
-- [DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset](https://arxiv.org/abs/2403.12945) -- Khazatsky et al., 2024. Tags: sensing, interaction, datasets. A diverse real-world dataset designed to capture the variation that laboratory demonstrations often miss.
-- [LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning](https://arxiv.org/abs/2306.03310) -- Liu et al., 2023. Tags: interaction, datasets, evaluation. Tests whether a policy can retain and transfer knowledge across task sequences.
-- [Open X-Embodiment: Robotic Learning Datasets and RT-X Models](https://arxiv.org/abs/2310.08864) -- Open X-Embodiment Collaboration, 2023. Tags: reasoning, sensing, interaction, datasets. Unifies data from many robots and tasks to study cross-embodiment learning.
-- [CALVIN: A Benchmark for Language-Conditioned Policy Learning for Long-Horizon Robot Manipulation Tasks](https://arxiv.org/abs/2112.03227) -- Mees et al., 2022. Tags: reasoning, interaction, datasets, evaluation. Measures language-conditioned, long-horizon manipulation with compositional task chains.
-- [Meta-World: A Benchmark and Evaluation for Multi-Task and Meta Reinforcement Learning](https://arxiv.org/abs/1910.10897) -- Yu et al., 2020. Tags: interaction, datasets, evaluation. A standard suite for multi-task and meta-learning in simulated manipulation.
-- [RLBench: The Robot Learning Benchmark & Learning Environment](https://arxiv.org/abs/1909.12271) -- James et al., 2019. Tags: interaction, simulation, datasets, evaluation. Provides a large set of language-described manipulation tasks in a common simulator.
-
-## Safety, evaluation, and deployment
-
-Physical systems fail in ways that a single success rate cannot describe. These resources foreground constraints, risk, robustness, and the difference between a demonstration and a deployable system.
-
-- [Safety-Gymnasium: A Unified Safe Reinforcement Learning Benchmark](https://arxiv.org/abs/2310.12567) -- Ji et al., 2023. Tags: interaction, safety, evaluation. A maintained benchmark for measuring reward and constraint satisfaction together.
-- [Train Offline, Test Online: A Real Robot Learning Benchmark](https://arxiv.org/abs/2306.00942) -- Singh et al., 2023. Tags: interaction, evaluation. Separates offline training from online evaluation on a real robot, making deployment gaps explicit.
-- [OpenAI Safety Gym](https://github.com/openai/safety-gym) -- Ray et al., 2019. Tags: interaction, safety, evaluation. Established a common language for constrained reinforcement-learning experiments.
-
-<!-- END GENERATED READING LIST -->
-
-## How to contribute
-
-The index is deliberately maintained like a reading group rather than a leaderboard. A useful
-addition has a clear connection to the physical loop and enough public evidence for another reader
-to follow it.
-
-1. Add or correct an entry in [`data/reading-list.json`](data/reading-list.json). Keep one primary
-   link per work, use the canonical title, and write a note that says what the work contributes.
-2. Run `make check`. The check catches duplicate keys and URLs, malformed metadata, and a stale
-   generated section in this README.
-3. Open a pull request. Please explain why an entry belongs in its chosen category; corrections to
-   titles, years, and links are especially welcome.
-
-Editorial decisions and the schema are documented in [`docs/maintenance.md`](docs/maintenance.md)
-and [`docs/taxonomy.md`](docs/taxonomy.md). The list favors primary papers, public datasets, and
-reusable software. It does not attempt to include every workshop paper, product announcement, or
-result that cannot be independently checked.
-
-## Citation
-
-There is no standalone Physical-RSI paper yet. For a fixed snapshot of the index, cite the
-repository and include its release date:
-
-```bibtex
-@misc{physicalrsi2026,
-  title        = {Physical-RSI: A Living Map of Reasoning, Sensing, and Interaction in the Physical World},
-  author       = {{SAIL Research Lab}},
-  year         = {2026},
-  howpublished = {\url{https://github.com/SAIL-Research-Lab/Physical-RSI}},
-  note         = {Accessed 2026-09-29}
-}
+```mermaid
+flowchart LR
+    E[Physical experience] --> J[Evaluation and credit]
+    J --> U[Candidate update]
+    U --> V[Verification gate]
+    V -->|adopt| S[Successor system]
+    V -->|reject or diagnose| J
+    S --> E
+    S -. mechanism revision .-> J
+    S -. mechanism revision .-> U
+    S -. mechanism revision .-> V
 ```
 
-The project is released under the MIT License. See [`LICENSE`](LICENSE).
+## Capability map: L1-L5
+
+L1-L5 are **independent evidence claims**, not a maturity ladder. A workflow may support several
+levels, and a higher number does not silently establish the levels below it. Classification applies to
+the demonstrated workflow, not to a paper's chosen label.
+
+| Capability | Deciding question | Representative evidence |
+| --- | --- | --- |
+| **L1: Human-supported improvement** | Does a person provide the corrective information that determines what changes? | [ConRFT](https://arxiv.org/abs/2502.05450) learns from robot trajectories containing operator corrections. |
+| **L2: Autonomous error recognition and recovery** | Does the system detect an unsatisfactory execution and choose how to recover? | [DoReMi](https://sites.google.com/view/doremi-paper) detects task-constraint violations and replans. [REFLECT](https://arxiv.org/abs/2306.15724) explains failures and proposes repairs. |
+| **L3: Autonomous learning across episodes** | Does physical experience produce a system-directed, retained change used in later episodes? | [SELFI](https://proceedings.mlr.press/v270/hirose25a.html) improves navigation through autonomous real-world practice. [VERITAS](https://arxiv.org/abs/2606.18247) uses visually verified rollouts for later policy fine-tuning. |
+| **L4: Transfer of acquired experience** | Is the contribution of prior experience demonstrated in another task, scene, environment, or embodiment? | [SOAR](https://arxiv.org/abs/2407.20635) shows that experience beyond the current scene helps target learning. [ASPIRE](https://arxiv.org/abs/2607.00272) retrieves discovered skills for real-robot programming. |
+| **L5: Physically grounded mechanism improvement** | Does physical evidence revise an inherited improvement mechanism, and does that revised mechanism produce better subsequent improvements? | [ENPIRE](https://arxiv.org/abs/2606.19980) revises and reuses robot-training code, so it is an important **L5 candidate**. It does not yet provide the matched improver comparison needed for a confirmed L5 claim. |
+
+At present, the literature contains strong evidence for the lower capabilities and early evidence for
+physically grounded mechanism revision. The paper does not identify a reviewed physical workflow
+that conclusively demonstrates strict, beneficial L5.
+
+## Agent participation
+
+Agent involvement is best classified by what the agent's output controls in the next cycle. Code,
+model weights, and text can appear at any of the three loops; the artifact type does not determine
+the level.
+
+### Loop 1: Agentic task execution
+
+The output controls the current task: specifying a goal, planning, invoking robot interfaces, or
+interpreting an outcome.
+
+- [SayCan](https://arxiv.org/abs/2204.01691) combines language-based planning with grounded skill affordances.
+- [Code as Policies](https://arxiv.org/abs/2209.07753) composes perception and control APIs into executable robot programs.
+- [Code-as-Monitor](https://arxiv.org/abs/2412.04455) generates geometric checks for reactive and proactive failure detection.
+- [Manipulate-Anything](https://arxiv.org/abs/2406.18915) uses vision-language components to assess completion during real-world manipulation.
+
+### Loop 2: Agentic improvement
+
+The output changes a capability used in later tasks. Agents diagnose experience, choose practice,
+generate a harness or model candidate, evaluate it, and retain useful results.
+
+- [SOAR](https://arxiv.org/abs/2407.20635) collects and filters autonomous robot practice for subsequent policy training.
+- [RoboGen](https://arxiv.org/abs/2311.01455) generates tasks, environments, and learning signals for automated skill learning.
+- [Eureka](https://arxiv.org/abs/2310.12931) and [DrEureka](https://arxiv.org/abs/2406.01967) generate reward code and sim-to-real training conditions.
+- [SHAPER](https://arxiv.org/abs/2608.11350) evolves reusable skills together with their execution harness in simulation.
+- [HARBOR](https://arxiv.org/abs/2606.08610) retains and retrieves experience from agentic robot-RL experiments.
+
+### Loop 3: Agent-mediated meta-improvement
+
+The output changes how future capability improvements are produced. A reward written for one
+training run belongs to Loop 2; changing the procedure that generates or selects rewards belongs to
+Loop 3.
+
+- [ENPIRE](https://arxiv.org/abs/2606.19980) lets a coding agent edit learning algorithms and training infrastructure from real-robot results.
+- [EvoTrainer](https://arxiv.org/abs/2606.03108) co-evolves agent policies and the training harness used to improve them.
+- [GEAR](https://arxiv.org/abs/2605.13874) evolves coding-agent search procedures from diagnostic feedback.
+- [HyperAgents](https://arxiv.org/abs/2603.19461) evaluates an improver by the descendants it creates under a fixed budget, including simulated reward-design tasks.
+- [Darwin Godel Machine](https://arxiv.org/abs/2505.22954) is a digital precedent for inherited changes to a coding agent's own implementation.
+
+The last four works help define or test meta-improvement, but they are not automatically evidence
+of Physical RSI. Physical grounding and inherited use must still be shown in the same workflow.
+
+## Training
+
+Training is a continuing, gated process rather than a one-off offline stage:
+
+> **experience collection -> evaluation and credit assignment -> parameter update -> verification and consolidation**
+
+Experience may come from real rollouts, simulation, or a learned world model. Credit may come from
+rewards, critics, verifiers, or failure attribution. Updates may target a policy, value model, reward
+model, world model, memory, or training procedure. A candidate matters only after a verification
+gate decides whether it should affect later operation.
+
+### Architectural substrates
+
+- **Causal VLA Transformers:** [SARM2](https://arxiv.org/abs/2606.10305) couples stage estimation and value learning to produce dense progress feedback.
+- **Unified world-action models:** [Motus2](https://arxiv.org/abs/2608.30237) shares policy, simulator, and evaluator interfaces; [RISE](https://arxiv.org/abs/2602.11075) separates controllable dynamics from progress evaluation for imagined RL.
+- **Video-generative world models:** [SC3-Eval](https://arxiv.org/abs/2606.18610) evaluates robot policies through dynamics, cross-view, and test-time consistency.
+- **Diffusion policies with constrained post-training:** [PACT](https://arxiv.org/abs/2606.08414) aligns a pretrained diffusion policy under safety and task-progress constraints.
+
+Across these substrates, the important design choices are not only model architecture and optimizer.
+Data must cover failures rather than merely repeat easy successes; imagined experience must remain
+calibrated to the real world; and evaluation data must not leak back into a self-evolving training
+loop. [FAR](https://arxiv.org/abs/2607.01111), for example, attributes failures to action blocks and
+returns successful recoveries to training, while [Visual Verification](https://arxiv.org/abs/2606.18247)
+filters self-generated trajectories before fine-tuning.
+
+## Verification
+
+Verification has three different targets:
+
+1. **Behavior verification:** should the current action or trajectory continue?
+2. **Data admission:** should this experience enter memory or training?
+3. **Update release:** should the resulting change become part of the persistent system?
+
+A good trajectory score is not a release test. Releasing an update may also require retention tests,
+out-of-distribution evaluation, safety checks, and evidence that old capabilities have not regressed.
+
+Representative work includes:
+
+- [Robometer](https://arxiv.org/abs/2603.02115), which learns general-purpose robotic rewards from trajectory comparisons.
+- [WorldEval](https://arxiv.org/abs/2505.19017), which tests whether predicted futures preserve real-world policy rankings.
+- [RoboArena](https://arxiv.org/abs/2506.18123), which compares policies through matched real-world trials.
+- [SC3-Eval](https://arxiv.org/abs/2606.18610), which uses self-consistent video generation to evaluate robot foundation models.
+- [No Free Checker](https://arxiv.org/abs/2609.09250), a survey of the assumptions and failure modes of robot-policy verifiers.
+- [BenchShield](https://arxiv.org/abs/2609.11028), which traces whether rewards follow the intended evaluation path.
+
+Two forms of independence matter. **Control independence** prevents a candidate from choosing,
+modifying, or bypassing its evaluator. **Information independence** prevents repeated feedback from
+turning a protected criterion into another optimization target. Adding more judges does not solve
+either problem when they share the same blind spot.
+
+### A strict beneficial-recursion test
+
+To show that an improver became better, compare the old and revised improvers with:
+
+- the same starting system and task distribution;
+- stable, protected evaluation criteria;
+- comparable robot trials, resets, hardware wear, simulation, GPU, search, and human effort;
+- repeated trials with uncertainty estimates;
+- retention, regression, safety, and out-of-distribution checks; and
+- measurement of the *next-generation improvement*, not only the current successor.
+
+Without these controls, a later system may be better simply because it received more data, more
+search, easier resets, or more human review.
+
+## Open problems
+
+- **Weight-level self-modification:** no physical system has demonstrated a complete, sustained loop in which its own weight-update process improves and continues to benefit.
+- **Judge reliability:** verifier and reward-model errors are inherited by the training loop.
+- **Imagination-reality gap:** world-model error limits the value of imagined training and evaluation.
+- **Forgetting and stability:** new policies, values, and world models can erase earlier competence.
+- **Sustained safety:** a continuously changing policy needs more than a one-time safety check.
+- **Longitudinal evaluation:** repeated self-evaluation needs protected tests and explicit anti-leakage rules.
+- **Transfer of training methods:** transferring a skill is not the same as transferring the procedure that learns it.
+- **Theory of recursive training:** we lack conditions for convergence when policy, world model, and evaluator train one another.
+
+## Contributing
+
+Contributions should make the evidence traceable. For a new paper, include its canonical title,
+primary link, year, the object that changes, the physical evidence used, whether the change persists,
+and the comparison that supports the claimed capability. Simulation-only and digital RSI work are
+welcome when their scope is stated explicitly.
+
+Please open an issue or pull request for additions and corrections. The repository is intentionally
+kept as a lightweight reading map: the README is the source of truth.
+
+## License
+
+This repository is released under the [MIT License](LICENSE).
